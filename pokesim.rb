@@ -4,19 +4,21 @@
 #
 
 class Pokemon
-  @@total_pokemon = 0
+  @@poke_list = Hash.new()
 
   attr_accessor :name
 
   def initialize(name)
-    if @@total_pokemon == 6
+    if @@poke_list.length == 6
       puts "You already have 6 Pokémon!"
-    elsif @@total_pokemon > 6
+    elsif @@poke_list.length > 6
       puts "ERROR: total Pokémon over 6"
     else
       @name = name
-      @id = Random.rand(11)
-      @@total_pokemon += 1
+      # store in hash using a symbol
+      @id = Random.rand().to_s.to_sym
+      @@poke_list[@id] = @name
+      puts "You caught #{name}!"
     end
   end
 
@@ -25,24 +27,29 @@ class Pokemon
     # Name changing is accessed through a public method rather than directly
     # changing the variable, so we can restrict certain words (e.g. fuck, shit,
     # balls :D)
-    if name == "restricted"
+    if name == "DEAD"
       puts "That name isn't allowed!"
     elsif name == @name
       puts "That name isn't different!"
     else
       @name = name
+      @@poke_list[@id] = @name
     end
+  end
 
-    def release
-      @@total_pokemon -= 1
-      puts "How to delete this Pokémon? Should I keep a list of IDs currently
-            in the party?"
-    end
+  def release
+    @@poke_list[@id] = "DEAD"
+    puts "#{name} has been released!"
+  end
 
-    def show_id
-      puts "usually you won't ever see this"
-      @id
-    end
+  def show_id
+    puts "usually you won't ever see this"
+    @id
+  end
+
+  def list
+    puts "this shouldn't happen"
+    @@poke_list
   end
 end
 
@@ -54,6 +61,10 @@ raehik = Pokemon.new("Raehik")
 puts raehik.name
 raehik.rename("Torchic")
 puts raehik.name
-raehik.rename("restricted")
+raehik.rename("DEAD")
 puts raehik.name
 puts raehik.show_id
+puts raehik.list
+raehik.release
+puts raehik.show_id
+puts raehik.list

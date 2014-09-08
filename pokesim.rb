@@ -6,7 +6,7 @@
 class Pokemon
   @@poke_list = Hash.new()
 
-  attr_accessor :name
+  attr_reader :name
 
   def initialize(name)
     if @@poke_list.length == 6
@@ -56,6 +56,20 @@ end
 #class Torchic
 #  extend or include ?
 #end
+
+class Trainer
+  @@num_trainers
+
+  attr_reader name
+  attr_reader num_pokemon
+
+  def catch_pokemon(species)
+    pokeman = Pokemon.new(species)
+    puts "You caught a #{pokeman.species}!"
+    puts "Would you like to nickname the #{pokeman.species}?"
+  end
+end
+
 
 raehik = Pokemon.new("Raehik")
 puts raehik.name

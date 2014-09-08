@@ -62,6 +62,7 @@ class Trainer
 
   attr_reader name
   attr_reader num_pokemon
+  attr_reader money
 
   def catch_pokemon(species)
     pokeman = Pokemon.new(species)
